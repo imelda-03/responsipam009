@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MealDetailPage extends StatefulWidget {
   final String mealId;
 
@@ -64,14 +63,22 @@ class _MealDetailPageState extends State<MealDetailPage> {
               fit: BoxFit.cover,
             ),
             SizedBox(height: 20),
-            Text(
-              'Category: ${mealData['strCategory'] ?? ''}',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Area: ${mealData['strArea'] ?? ''}',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Category: ${mealData['strCategory'] ?? ''}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(width: 10), // Spacer
+                Expanded(
+                  child: Text(
+                    'Area: ${mealData['strArea'] ?? ''}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20),
             Text(
@@ -103,6 +110,7 @@ class _MealDetailPageState extends State<MealDetailPage> {
       ),
     );
   }
+
   void _launchTutorial(String? youtubeLink) async {
     if (youtubeLink != null && await canLaunch(youtubeLink)) {
       await launch(youtubeLink);
@@ -110,6 +118,7 @@ class _MealDetailPageState extends State<MealDetailPage> {
       throw 'Could not launch $youtubeLink';
     }
   }
+
   // Helper method to build ingredients list
   Widget _buildIngredientsList(Map<String, dynamic> mealData) {
     List<Widget> ingredientsWidgets = [];
